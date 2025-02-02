@@ -1,8 +1,17 @@
-import Image from "next/image";
+import AddProductForm from "./form";
 import { formatMoney } from "./formatMoney";
 
+//TODO Extrair os componentes dessa tela
 export default async function Home() {
+    const showForm = false;
 
+    if (!showForm) {
+        return (<ProductList />);
+    }
+    return (<AddProductForm />);
+}
+
+export async function ProductList() {
     const data = await fetch('http://localhost:5091/Product');
     const products = await data.json();
 
@@ -28,24 +37,33 @@ export default async function Home() {
     );
 }
 
-
 export function ProductElement({ product }: { product: any }) {
     return (
         <li>
             <div>
+                {/* TODO: Ao atualizar a api utilizar este componente pra renderizar as imagens */}
+
+                {/* <ProductImageWrapper
+							src={product.thumbnail.url}
+							alt={product.thumbnail.alt ?? ""}
+							width={512}
+							height={512}
+							sizes={"512px"}
+                /> */}
+
+                <div className="aspect-square overflow-hidden bg-neutral-50">
+                    <img className="h-full w-full object-contain object-center p-2" />
+                </div>
+
                 <div className="mt-2 flex justify-between">
                     <div>
                         <h3 className="mt-1 text-sm font-semibold text-neutral-900">{product.name}</h3>
                         <p className="mt-1 text-sm text-neutral-500" data-testid="ProductElement_Category">
-                            {product?.name}
+                            Stock: {product?.stock}
                         </p>
                     </div>
                     <p className="mt-1 text-sm font-medium text-neutral-900" data-testid="ProductElement_PriceRange">
                         {formatMoney(product?.price)}
-                    </p>
-
-                    <p className="mt-1 text-sm font-medium text-neutral-900" data-testid="ProductElement_PriceRange">
-                        {product?.stock}
                     </p>
                 </div>
             </div>
