@@ -1,4 +1,7 @@
 import type { Config } from "tailwindcss";
+import TypographyPlugin from "@tailwindcss/typography";
+import FormPlugin from "@tailwindcss/forms";
+import ContainerQueriesPlugin from "@tailwindcss/container-queries";
 
 export default {
   content: [
@@ -14,5 +17,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [TypographyPlugin, FormPlugin, ContainerQueriesPlugin],
 } satisfies Config;
